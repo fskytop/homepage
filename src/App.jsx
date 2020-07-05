@@ -5,15 +5,10 @@ import { connect } from 'react-redux';
 import { history } from './_helper';
 import { alertActions } from './_action';
 import { Admin } from './_layout';
-import AppHeader from './AppHeader';
 import './App.css';
 import MicroFrontend from './MicroFrontend';
 import About from './About';
-import { PrivateRoute } from './_component';
-import { HomePage } from './HomePage';
-import { LoginPage } from './LoginPage';
-import { RedirectPage } from './RedirectPage';
-import { RegisterPage } from './RegisterPage';
+import { NavBar, Footer } from "./_component"
 
 const {
   REACT_APP_COMPONENT_HOST: componentHost,
@@ -39,14 +34,13 @@ class App extends React.Component {
       <div className="app">
         {alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
         <BrowserRouter>
+          <NavBar/>
             <Switch>
-              <PrivateRoute exact path="/abc" component={Component}/>
-              <PrivateRoute path="/admin" component={Admin}/>
-              <Route path="/login" component={LoginPage} />
-              <Route path="/oauth/redirect" component={RedirectPage} />
-              <Redirect from="/" to="/admin/dashboard" />
+              <Route path="/comics" component={Component}/>
+              <Redirect from="/" to="/comics" />
               <Redirect from="*" to="/" />
             </Switch>
+          <Footer/>
         </BrowserRouter>
       </div>
     );
