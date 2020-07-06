@@ -1,6 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import App from '../App';
+import { App } from '../App';
+import { createTestStore } from '../_helper/store'
 
 jest.mock('../MicroFrontend', () => {
   const MicroFrontend = () => <div />;
@@ -8,23 +9,41 @@ jest.mock('../MicroFrontend', () => {
 });
 
 describe('App', () => {
+  let store;
+  let app;
+
+  const initialState = {
+    alert: {
+      type: 'alert-none',
+      message: "ok"
+    }
+  };
+
+  beforeEach(() => {
+    store = createTestStore(initialState);
+    app = mount(<App store={store} />);
+  });
+  
   const getCurrentRoute = app =>
     app.find('Router').prop('history').location.pathname;
 
-  it('can render the browse micro frontend, and randomly pick a restaurant', () => {
-    const app = mount(<App />);
+  const findByTestAttribute = (component, attr) => 
+    component.find(`[data-test='${attr}']`);
 
-    // Initially we see the list of restaurants, at the root route
-    expect(getCurrentRoute(app)).toEqual('/');
+  it('Should render component without errors', () => {
+    const component = findByTestAttribute(app, 'appComponent');
+    expect(component.length).toBe(1);
+  });
+
+  it('can render the browse micro frontend', () => {
+
+    expect(getCurrentRoute(app)).toEqual('/comics');
     expect(app.find('MicroFrontend')).toHaveProp({ name: 'Component' });
 
-    // If we click the 'surprise me' link...
     app
-      .find('a')
-      .find({ href: '/about' })
+      .find('a[href="/about"]')
       .simulate('click', { button: 0 });
 
-    // Then the route should update and we should be looking at a restaurant
     expect(getCurrentRoute(app)).toMatch(/\/about/);
   });
 });

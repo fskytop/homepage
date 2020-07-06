@@ -12,3 +12,9 @@ export const store = createStore(
         loggerMiddleware
     )
 );
+
+export const middlewareUsed = [thunkMiddleware, loggerMiddleware];
+
+export const createStoreWithMiddleware = applyMiddleware(...middlewareUsed)(createStore);
+
+export const createTestStore = (initialState) => createStoreWithMiddleware(rootReducer, initialState);

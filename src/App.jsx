@@ -1,10 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { history } from './_helper';
-import { alertActions } from './_action';
-import { Admin } from './_layout';
 import './App.css';
 import MicroFrontend from './MicroFrontend';
 import About from './About';
@@ -19,28 +16,22 @@ const Component = ({ history }) => (
 );
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    history.listen((location, action) => {
-      // clear alert on location change
-      this.props.clearAlerts();
-    });
-  }
-
   render() {
     const {alert} = this.props;
     return (
-      <div className="app">
+      <div className="app" data-test="appComponent">
         {alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
         <BrowserRouter>
-          <NavBar/>
-            <Switch>
-              <Route path="/comics" component={Component}/>
-              <Redirect from="/" to="/comics" />
-              <Redirect from="*" to="/" />
-            </Switch>
-          <Footer/>
+          <React.Fragment>
+            <NavBar/>
+              <Switch>
+                <Route exact path="/about" render={About}/>
+                <Route path="/comics" component={Component}/>
+                <Redirect from="/" to="/comics" />
+                <Redirect from="*" to="/" />
+              </Switch>
+            <Footer/>
+          </React.Fragment>
         </BrowserRouter>
       </div>
     );
@@ -54,7 +45,6 @@ function mapState(state) {
 }
 
 const actionCreators = {
-  clearAlerts: alertActions.clear
 };
 
 const connectedApp = connect(mapState, actionCreators)(App);

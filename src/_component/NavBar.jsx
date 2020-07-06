@@ -6,7 +6,7 @@ export const NavBar = () => (
 
     <div className="Header py-0 js-details-container Details flex-wrap flex-lg-nowrap px-3">
       <div className="Header-item">
-        <a className="Header-link" href="https://gitaction.com/">
+        <a className="Header-link" href="/">
           <img className="avatar" height="40" width="40" alt="icon" src={logo} />
         </a>
       </div>
