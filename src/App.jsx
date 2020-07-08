@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -21,16 +21,16 @@ class App extends React.Component {
     return (
       <div className="app" data-test="appComponent">
         {alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <NavBar/>
           <Switch>
-            <Route exact path="/about" render={About}/>
+            <Route path={process.env.PUBLIC_URL + "/about"} render={About}/>
             <Route path="/comics" component={Component}/>
             <Redirect from="/" to="/comics"/>
             <Redirect from="*" to="/"/>
           </Switch>
           <Footer/>
-        </HashRouter>
+        </BrowserRouter>
       </div>
     );
   }
