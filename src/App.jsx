@@ -21,15 +21,15 @@ class App extends React.Component {
     return (
       <div className="app" data-test="appComponent">
         {alert.message && <div className={`alert ${alert.type}`}>{alert.message}</div>}
-        <BrowserRouter>
+        <BrowserRouter basename={process.env.PUBLIC_URL}>
           <React.Fragment>
             <NavBar/>
-              <Switch>
-                <Route exact path="/about" render={About}/>
-                <Route path="/comics" component={Component}/>
-                <Redirect from="/" to="/comics" />
-                <Redirect from="*" to="/" />
-              </Switch>
+            <Switch>
+              <Route exact path="/about" render={About}/>
+              <Route path="/comics" component={Component}/>
+              <Redirect from="/" to="/comics"/>
+              <Redirect from="*" to="/"/>
+            </Switch>
             <Footer/>
           </React.Fragment>
         </BrowserRouter>
