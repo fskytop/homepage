@@ -13,7 +13,7 @@ export const NavBar = () => (
 
       <div className="Header-item Header-item--full">
         <nav className="d-flex flex-row" aria-label="Global">
-          <a className="js-selected-navigation-item Header-link py-3 mr-0 mr-3 border-top border-top-0 border-white-fade-15" href="/comics">
+          <a data-ga-click="Navigation, go to comics, text:comics" className="js-selected-navigation-item Header-link py-3 mr-0 mr-3 border-top border-top-0 border-white-fade-15" href="/comics">
             Comics
           </a>
         </nav>
